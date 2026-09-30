@@ -123,3 +123,9 @@ BlaskUI (Tauri, Windows)
 - Incorporare Ollama o i modelli dentro l'installer v1.
 - Modificare router/modelli backend esistenti per motivi estetici.
 - Saltare fasi o aggiungere feature prima che la Fase 4 sia verde.
+
+## Build macOS (in corso)
+
+- Workflow: .github/workflows/build-macos.yml (push su master o dispatch manuale)
+- Ultimo push: 2026-09-30 23:48
+

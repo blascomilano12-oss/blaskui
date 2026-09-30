@@ -67,6 +67,7 @@
 					bind:this={selector}
 					id="model"
 					placeholder={$i18n.t('Select a model')}
+					data-magnetic
 					items={$models.map((model) => ({
 						value: model.id,
 						label: model.name,

@@ -1150,12 +1150,13 @@ const DEFAULT_PINNED_ITEMS = ['notes', 'workspace', 'images'];
 				<div
 					class="sidebar px-1 pt-1.5 pb-1 flex justify-between space-x-1 text-gray-600 dark:text-gray-400 sticky top-0 z-10 -mb-2"
 				>
-					<a
-						class="flex items-center rounded-xl size-8.5 h-full justify-center hover:bg-gray-100 dark:hover:bg-gray-900 transition no-drag-region"
-						href="/"
-						draggable="false"
-						on:click={newChatHandler}
-					>
+				<a
+					class="flex items-center rounded-xl size-8.5 h-full justify-center hover:bg-gray-100 dark:hover:bg-gray-900 transition no-drag-region"
+					href="/"
+					draggable="false"
+					data-magnetic
+					on:click={newChatHandler}
+				>
 						<!-- LICENSE covers this Open WebUI sidebar logo.
 					Do not alter, remove, obscure, or replace it except as LICENSE permits:
 					https://docs.openwebui.com/license. BlaskUI logo: currentColor, segue il tema. -->

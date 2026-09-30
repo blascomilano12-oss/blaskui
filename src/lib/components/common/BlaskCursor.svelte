@@ -3,13 +3,13 @@
 	import { spring } from 'svelte/motion';
 	import { user } from '$lib/stores';
 
-	// Cursore BlaskUI: freccia con fisica a molla (stiffness/damping come il
-	// riferimento motion), inclinazione dalla velocità, tag col nome utente.
-	// Solo desktop con mouse: su touch non si monta proprio.
+	// Cursore BlaskUI: freccia con fisica a molla, inclinazione dalla velocità,
+	// tag col nome utente che sparisce/riappare con doppio scuotimento.
 	let enabled = false;
 	let overText = false;
 	let overMenu = false;
 	let visible = false;
+	let tagVisible = true;
 
 	const pos = spring({ x: -100, y: -100 }, { stiffness: 300, damping: 25 });
 	const tag = spring({ x: -100, y: -100 }, { stiffness: 180, damping: 22 });
@@ -20,11 +20,16 @@
 	let vx = 0;
 	let vy = 0;
 
+	// shake detection: conta i cambi di direzione X entro una finestra temporale
+	let lastDir = 0;
+	let dirChanges: number[] = [];
+	const SHAKE_WINDOW = 500; // ms per 2 scuotimenti
+	const CHANGES_PER_SHAKE = 2; // ogni scuotimento = 2 cambi di direzione
+
 	const onMove = (e: MouseEvent) => {
 		visible = true;
 		const now = performance.now();
 		const dt = Math.max(1, now - lastT);
-		// velocità istantanea smorzata: basta per tilt + squash
 		vx = vx * 0.7 + ((e.clientX - lastX) / dt) * 1000 * 0.3;
 		vy = vy * 0.7 + ((e.clientY - lastY) / dt) * 1000 * 0.3;
 		lastX = e.clientX;
@@ -32,9 +37,26 @@
 		lastT = now;
 		pos.set({ x: e.clientX, y: e.clientY });
 		tag.set({ x: e.clientX, y: e.clientY });
+
+		// shake detection
+		const dx = e.clientX - lastX;
+		if (Math.abs(dx) > 2) {
+			const dir = dx > 0 ? 1 : -1;
+			if (dir !== lastDir && lastDir !== 0) {
+				dirChanges.push(now);
+				// mantieni solo i cambi recenti
+				dirChanges = dirChanges.filter((t) => now - t < SHAKE_WINDOW);
+				// 2 scuotimenti = 4 cambi di direzione
+				if (dirChanges.length >= CHANGES_PER_SHAKE * 2) {
+					tagVisible = !tagVisible;
+					dirChanges = [];
+				}
+			}
+			lastDir = dir;
+		}
+
 		const target = e.target as HTMLElement | null;
 		overText = !!target?.closest?.('input, textarea, [contenteditable="true"]');
-		// sopra menu/dropdown/dialog: la freccia resta, il tag nome si ritira con animazione
 		overMenu = !!target?.closest?.(
 			'[role="menu"], [role="listbox"], [role="dialog"], [role="menuitem"], .tippy-box, [data-tippy-root], dialog, [data-radix-popper-content-wrapper]'
 		);
@@ -59,7 +81,7 @@
 </script>
 
 {#if enabled}
-	<!-- freccia: sempre sopra tutto (sopra anche ai menu tipo tippy z-9999) -->
+	<!-- freccia: sempre sopra tutto -->
 	<div
 		class="pointer-events-none fixed top-0 left-0 z-[100001] transition-opacity duration-150"
 		style="opacity: {visible ? 1 : 0}; transform: translate({$pos.x}px, {$pos.y}px);"
@@ -84,11 +106,11 @@
 			</svg>
 		{/if}
 	</div>
-	<!-- tag col nome utente, in ritardo elastico; sui menu si ritira con animazione -->
+	<!-- tag nome: sparisce/riappare con doppio scuotimento, si ritira sui menu -->
 	{#if $user?.name}
 		<div
 			class="pointer-events-none fixed top-0 left-0 z-[100000] transition-all duration-300 ease-out"
-			style="opacity: {visible && !overMenu ? 1 : 0}; transform: translate({$tag.x + 22}px, {$tag.y + 18}px) scale({visible && !overMenu ? 1 : 0.6});"
+			style="opacity: {visible && !overMenu && tagVisible ? 1 : 0}; transform: translate({$tag.x + 22}px, {$tag.y + 18}px) scale({visible && !overMenu && tagVisible ? 1 : 0.6});"
 			aria-hidden="true"
 		>
 			<div

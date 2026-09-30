@@ -1,0 +1,46 @@
+{
+	"productName": "BlaskUI",
+	"mainBinaryName": "blaskui",
+	"version": "0.1.0",
+	"identifier": "com.blaskui.app",
+	"build": {
+		"frontendDist": "splash",
+		"beforeDevCommand": "",
+		"beforeBuildCommand": ""
+	},
+	"app": {
+		"windows": [
+			{
+				"label": "main",
+				"title": "BlaskUI",
+				"width": 1280,
+				"height": 800,
+				"minWidth": 940,
+				"minHeight": 600,
+				"url": "index.html",
+				"transparent": true,
+				"decorations": false
+			}
+		],
+		"security": {
+			"csp": null
+		}
+	},
+	"bundle": {
+		"active": true,
+		"targets": "nsis",
+		"icon": [
+			"icons/32x32.png",
+			"icons/128x128.png",
+			"icons/128x128@2x.png",
+			"icons/icon.icns",
+			"icons/icon.ico"
+		],
+		"resources": {
+			"../payload/payload.zip": "payload.zip"
+		},
+		"category": "Utility",
+		"shortDescription": "BlaskUI — AI desktop personale",
+		"longDescription": "BlaskUI: shell desktop Tauri + backend Open WebUI locale (Ollama + API compatibili)."
+	}
+}

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BlaskUI">
+	<title>BlaskUI — versione animata</title>
+	<!-- Logo BlaskUI animato: splash, onboarding e schermate di attesa.
+	     Solo CSS/SMIL, nessun JS: resta leggero anche dentro la WebView. -->
+	<defs>
+		<linearGradient id="blaskSheen" x1="0" y1="0" x2="1" y2="0">
+			<stop offset="0" stop-color="#ffffff" stop-opacity="0" />
+			<stop offset="0.5" stop-color="#ffffff" stop-opacity="0.5" />
+			<stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+		</linearGradient>
+		<clipPath id="blaskMarkClip">
+			<path d="M46 352 C112 254 164 148 214 94 C254 152 302 238 376 306 C298 292 172 302 46 352 Z" />
+			<circle cx="424" cy="206" r="74" />
+			<path d="M74 344 C206 434 350 456 520 300 C436 384 240 360 74 344 Z" />
+		</clipPath>
+	</defs>
+
+	<g fill="currentColor">
+		<path
+			id="blaskPeak"
+			d="M46 352 C112 254 164 148 214 94 C254 152 302 238 376 306 C298 292 172 302 46 352 Z"
+		/>
+		<circle id="blaskMoon" cx="424" cy="206" r="74" />
+		<path
+			id="blaskWave"
+			d="M74 344 C206 434 350 456 520 300 C436 384 240 360 74 344 Z"
+			opacity="0.9"
+		/>
+	</g>
+
+	<rect
+		x="-140"
+		y="0"
+		width="140"
+		height="512"
+		fill="url(#blaskSheen)"
+		clip-path="url(#blaskMarkClip)"
+	>
+		<animate attributeName="x" from="-140" to="660" dur="4.5s" repeatCount="indefinite" />
+	</rect>
+
+	<style>
+		#blaskMoon {
+			animation: blaskFloat 6s ease-in-out infinite;
+			transform-origin: 424px 206px;
+		}
+		#blaskWave {
+			animation: blaskBreathe 7s ease-in-out infinite;
+			transform-origin: 290px 350px;
+		}
+		@keyframes blaskFloat {
+			0%, 100% { transform: translateY(0); }
+			50% { transform: translateY(-10px); }
+		}
+		@keyframes blaskBreathe {
+			0%, 100% { transform: scaleY(1); }
+			50% { transform: scaleY(1.05); }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			#blaskMoon, #blaskWave { animation: none; }
+		}
+	</style>
+</svg>

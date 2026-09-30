@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="BlaskUI">
+	<title>BlaskUI</title>
+	<!--
+	  Logo BlaskUI: vela/monte + luna + onda lunga.
+	  Monocromatico con currentColor: si adatta a chiaro/scuro senza doppi file.
+	-->
+	<g fill="currentColor">
+		<!-- vela / monte -->
+		<path
+			d="M52 348 C112 252 162 148 214 96 C250 152 300 244 374 302 C296 288 178 302 52 348 Z"
+		/>
+		<!-- luna -->
+		<circle cx="422" cy="212" r="76" />
+		<!-- onda -->
+		<path
+			d="M52 300 C200 404 340 434 516 300 C432 386 252 352 52 300 Z"
+			opacity="0.92"
+		/>
+	</g>
+</svg>

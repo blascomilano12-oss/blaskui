@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="it">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>BlaskUI — avvio</title>
+		<style>
+			@font-face {
+				font-family: 'Satoshi';
+				src: url('fonts/Satoshi-400.woff2');
+				font-weight: 400;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: 'Satoshi';
+				src: url('fonts/Satoshi-700.woff2');
+				font-weight: 700;
+				font-display: swap;
+			}
+			:root {
+				color-scheme: dark;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: #070912;
+				color: #e8ecf6;
+				font-family: 'Satoshi', 'Segoe UI', system-ui, sans-serif;
+			}
+			.card {
+				position: relative;
+				z-index: 1;
+				text-align: center;
+				padding: 32px 40px;
+				width: min(420px, 90vw);
+			}
+			video.bg {
+				position: fixed;
+				inset: 0;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				z-index: 0;
+			}
+			.veil {
+				position: fixed;
+				inset: 0;
+				z-index: 0;
+				background: linear-gradient(180deg, rgba(7, 9, 18, 0.45) 0%, rgba(7, 9, 18, 0.75) 100%);
+			}
+			.mark {
+				width: 72px;
+				height: 72px;
+				filter: invert(1);
+				animation: blaskFloat 4s ease-in-out infinite;
+			}
+			@keyframes blaskFloat {
+				0%, 100% { transform: translateY(0); }
+				50% { transform: translateY(-8px); }
+			}
+			h1 {
+				margin: 18px 0 4px;
+				font-size: 44px;
+				font-weight: 700;
+				letter-spacing: 1px;
+				animation: blaskFadeUp 0.8s ease-out;
+			}
+			h1 span {
+				color: #7aa2ff;
+			}
+			@keyframes blaskFadeUp {
+				from { opacity: 0; transform: translateY(12px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+			p.sub {
+				margin: 0 0 32px;
+				color: #9aa3c0;
+				font-size: 14px;
+				animation: blaskFadeUp 0.8s ease-out 0.15s both;
+			}
+			.progress-wrap {
+				width: 100%;
+				height: 6px;
+				background: rgba(255, 255, 255, 0.1);
+				border-radius: 3px;
+				overflow: hidden;
+				margin-bottom: 14px;
+				animation: blaskFadeUp 0.8s ease-out 0.3s both;
+			}
+			.progress-bar {
+				height: 100%;
+				width: 0%;
+				background: linear-gradient(90deg, #7aa2ff, #3d5cff);
+				border-radius: 3px;
+				transition: width 0.4s ease-out;
+			}
+			.progress-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+				animation: blaskFadeUp 0.8s ease-out 0.3s both;
+			}
+			#progress-pct {
+				font-size: 13px;
+				font-weight: 700;
+				color: #7aa2ff;
+				min-width: 40px;
+				text-align: right;
+			}
+			#status {
+				min-height: 22px;
+				font-size: 14px;
+				color: #cfd7f2;
+				animation: blaskFadeUp 0.8s ease-out 0.45s both;
+			}
+			.hint {
+				margin-top: 20px;
+				font-size: 12px;
+				color: #6b7494;
+				animation: blaskFadeUp 0.8s ease-out 0.6s both;
+			}
+			@media (prefers-reduced-motion: reduce) {
+				.mark, h1, p.sub, .progress-wrap, .progress-row, #status, .hint {
+					animation: none;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<video class="bg" src="bg.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+		<div class="veil"></div>
+		<div class="card">
+			<img class="mark" src="logo.svg" alt="BlaskUI" />
+			<h1>Blask<span>UI</span></h1>
+			<p class="sub">ambiente AI personale</p>
+			<div class="progress-row">
+				<span>Avvio</span>
+				<span id="progress-pct">0%</span>
+			</div>
+			<div class="progress-wrap">
+				<div class="progress-bar" id="progress-bar"></div>
+			</div>
+			<p id="status">Inizializzazione…</p>
+			<p class="hint">Non chiudere questa finestra. Il primo avvio può richiedere alcuni minuti.</p>
+		</div>
+	</body>
+</html>
